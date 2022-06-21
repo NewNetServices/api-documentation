@@ -2,6 +2,10 @@
 
 ## CreateServiceOrder REQUESTS
 ### CreateServiceOrder : VALID REQUEST
+#### Expected Response Code
+```
+201 Created
+```
 #### Request Headers Sent
 ```
 Content-Type: application/json
@@ -26,18 +30,14 @@ curl -X POST  ^
   -d '{"RequestItemId": "987654321", "ProvisioningTaskId": "123456789" "RequestorContactName": "FirstName LastName" "RequestorContactEmail": "your@email.com" "RequestorContactPhone": "800-333-5555" "ProvisioingTaskShortDescription": "Breif description of this request."}' ^
   localhost/v2/serviceorder/create
 ```
-#### Expected Response Code
-```
-201 Created
-```
-#### Expected Response Header
-```
-Content-Type: application/json; charset=utf-8
-```
 
 ---
 
 ### CreateServiceOrder : INVALID JWT Token
+#### Expected Response Code
+```
+401 Unauthorized
+```
 #### Request Headers Sent
 ```
 Content-Type: application/json
@@ -62,18 +62,14 @@ curl -X POST  ^
   -d '{"RequestItemId": "987654321", "ProvisioningTaskId": "123456789" "RequestorContactName": "FirstName LastName" "RequestorContactEmail": "your@email.com" "RequestorContactPhone": "800-333-5555" "ProvisioingTaskShortDescription": "Breif description of this request."}' ^
   localhost/v2/serviceorder/create
 ```
-#### Expected Response Code
-```
-401 Unauthorized
-```
-#### Expected Response Header
-```
-
-```
 
 ---
 
 ### CreateServiceOrder : INVALID Body
+#### Expected Response Code
+```
+400 Bad Request
+```
 #### Request Headers Sent
 ```
 Content-Type: application/json
@@ -98,14 +94,6 @@ curl -X POST  ^
   -H "Content-Type: application/json" ^
   -d '{"Id": "987654321", "ProvisioningTaskId": "123456789" "RequestorContactName": "FirstName LastName" "RequestorContactEmail": "your@email.com" "RequestorContactPhone": "800-333-5555" "ProvisioingTaskShortDescription": "Breif description of this request."}' ^
   localhost/v2/serviceorder/create
-```
-#### Expected Response Code
-```
-400 Bad Request
-```
-#### Expected Response Header
-```
-
 ```
 
 ---
