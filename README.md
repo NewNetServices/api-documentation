@@ -1,6 +1,10 @@
 # NNS SFO CSIMS API Testing cURL commands for Windows Command Prompt
+1. [CreateServiceOrder REQUESTS](#CreateServiceOrder)
+2. [SubmitAlert REQUESTS](#SubmitAlert)
 
-## CreateServiceOrder REQUESTS
+---
+
+## <span id="CreateServiceOrder">CreateServiceOrder REQUESTS</span>
 ### CreateServiceOrder : VALID REQUEST
 #### Expected Response Code
 ```
@@ -97,4 +101,103 @@ curl -X POST  ^
 ```
 
 ---
+
+## <span id="SubmitAlert">SubmitAlert REQUESTS</span>
+### SubmitAlert : VALID REQUEST
+#### Expected Response Code
+```
+201 Created
+```
+#### Request Headers Sent
+```
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibm9haHMiLCJqdGkiOiI0Y2ZkNDY1My1hOTRmLTQ4MGUtYjAxOC0wYTJmODEyZGU5OTEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTYzNTkyNTA0MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCIsIlJvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoibm9haHMiLCJSSWQiOiIxNDVlOGQ4OC0wMmFkLTQ4N2MtODg3ZC00ZjdkNDc2Nzg4ZWQifQ._zt1whTRjVhbOzQqUqOlIpaksVcDmoIjhLV_wiabuhA
+```
+#### Request Body Sent
+```
+{
+  "alert":
+    {
+      "subject": "Production Node WF-FES0150B-EX4800C.***.******.*** is UP",
+      "name": "WF-FES0150B-EX4800C.***.******.***",
+      "ipAddress": "127.0.0.101",
+      "location": "Starbucks || GPS Coordinates : (37.33182,-122.03118)","date": "July 5th, 2022 4:20AM"
+    }
+}
+```
+#### Request CURL
+```
+curl -X POST  ^
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibm9haHMiLCJqdGkiOiI0Y2ZkNDY1My1hOTRmLTQ4MGUtYjAxOC0wYTJmODEyZGU5OTEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTYzNTkyNTA0MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCIsIlJvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoibm9haHMiLCJSSWQiOiIxNDVlOGQ4OC0wMmFkLTQ4N2MtODg3ZC00ZjdkNDc2Nzg4ZWQifQ._zt1whTRjVhbOzQqUqOlIpaksVcDmoIjhLV_wiabuhA" ^
+  -H "Content-Type: application/json" ^
+  -d '{"alert":{"subject": "Production Node WF-FES0150B-EX4800C.***.******.*** is UP","name": "WF-FES0150B-EX4800C.***.******.***","ipAddress": "127.0.0.101","location": "Starbucks || GPS Coordinates : (37.33182,-122.03118)","date": "July 5th, 2022 4:20AM"}}' ^
+  localhost/v2/alert/create
+```
+
+---
+
+### SubmitAlert : INVALID JWT Token
+#### Expected Response Code
+```
+401 Unauthorized
+```
+#### Request Headers Sent
+```
+Content-Type: application/json
+Authorization: Bearer abcdefghijklmnopqrstuvwxyz1234567890
+```
+#### Request Body Sent
+```
+{
+  "alert":
+    {
+      "subject": "Production Node WF-FES0150B-EX4800C.***.******.*** is UP",
+      "name": "WF-FES0150B-EX4800C.***.******.***",
+      "ipAddress": "127.0.0.101",
+      "location": "Starbucks || GPS Coordinates : (37.33182,-122.03118)","date": "July 5th, 2022 4:20AM"
+    }
+}
+```
+#### Request CURL
+```
+curl -X POST  ^
+  -H "Authorization: Bearer abcdefghijklmnopqrstuvwxyz1234567890" ^
+  -H "Content-Type: application/json" ^
+  -d '{"alert":{"subject": "Production Node WF-FES0150B-EX4800C.***.******.*** is UP","name": "WF-FES0150B-EX4800C.***.******.***","ipAddress": "127.0.0.101","location": "Starbucks || GPS Coordinates : (37.33182,-122.03118)","date": "July 5th, 2022 4:20AM"}}' ^
+  localhost/v2/alert/create
+```
+
+---
+
+### SubmitAlert : INVALID Body
+*Data error eg. an incorrect variable name*
+#### Expected Response Code
+```
+400 Bad Request
+```
+#### Request Headers Sent
+```
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibm9haHMiLCJqdGkiOiI0Y2ZkNDY1My1hOTRmLTQ4MGUtYjAxOC0wYTJmODEyZGU5OTEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTYzNTkyNTA0MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCIsIlJvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoibm9haHMiLCJSSWQiOiIxNDVlOGQ4OC0wMmFkLTQ4N2MtODg3ZC00ZjdkNDc2Nzg4ZWQifQ._zt1whTRjVhbOzQqUqOlIpaksVcDmoIjhLV_wiabuhA
+```
+#### Request Body Sent
+```
+{
+  "alert":
+    {
+      "alertSubject": "Production Node WF-FES0150B-EX4800C.***.******.*** is UP",
+      "name": "WF-FES0150B-EX4800C.***.******.***",
+      "ipAddress": "127.0.0.101",
+      "location": "Starbucks || GPS Coordinates : (37.33182,-122.03118)","date": "July 5th, 2022 4:20AM"
+    }
+}
+```
+#### Request CURL
+```
+curl -X POST  ^
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibm9haHMiLCJqdGkiOiI0Y2ZkNDY1My1hOTRmLTQ4MGUtYjAxOC0wYTJmODEyZGU5OTEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTYzNTkyNTA0MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCIsIlJvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoibm9haHMiLCJSSWQiOiIxNDVlOGQ4OC0wMmFkLTQ4N2MtODg3ZC00ZjdkNDc2Nzg4ZWQifQ._zt1whTRjVhbOzQqUqOlIpaksVcDmoIjhLV_wiabuhA" ^
+  -H "Content-Type: application/json" ^
+  -d '{"alert":{"subject": "Production Node WF-FES0150B-EX4800C.***.******.*** is UP","name": "WF-FES0150B-EX4800C.***.******.***","ipAddress": "127.0.0.101","location": "Starbucks || GPS Coordinates : (37.33182,-122.03118)","date": "July 5th, 2022 4:20AM"}}' ^
+  localhost/v2/alert/create
+```
 
