@@ -1,11 +1,20 @@
 # NNS SFO CSIMS API Testing cURL commands for Windows Command Prompt
 1. [CreateServiceOrder REQUESTS](#CreateServiceOrder)
+
+    * [201 Created](#CreateServiceOrder-201)
+    * [401 Unauthorized](#CreateServiceOrder-401)
+    * [400 Bad Request](#CreateServiceOrder-400)
+
 2. [SubmitAlert REQUESTS](#SubmitAlert)
+
+    * [201 Created](#SubmitAlert-201)
+    * [401 Unauthorized](#SubmitAlert-401)
+    * [400 Bad Request](#SubmitAlert-400)
 
 ---
 
 ## <span id="CreateServiceOrder">CreateServiceOrder REQUESTS</span>
-### CreateServiceOrder : VALID REQUEST
+### <span id="CreateServiceOrder-201">CreateServiceOrder : VALID REQUEST</span>
 #### Expected Response Code
 ```
 201 Created
@@ -37,7 +46,7 @@ curl -X POST  ^
 
 ---
 
-### CreateServiceOrder : INVALID JWT Token
+### <span id="CreateServiceOrder-401">CreateServiceOrder : INVALID JWT Token</span>
 #### Expected Response Code
 ```
 401 Unauthorized
@@ -69,7 +78,7 @@ curl -X POST  ^
 
 ---
 
-### CreateServiceOrder : INVALID Body
+### <span id="CreateServiceOrder-400">CreateServiceOrder : INVALID Body</span>
 *Data error eg. an incorrect variable name*
 #### Expected Response Code
 ```
@@ -103,7 +112,7 @@ curl -X POST  ^
 ---
 
 ## <span id="SubmitAlert">SubmitAlert REQUESTS</span>
-### SubmitAlert : VALID REQUEST
+### <span id="SubmitAlert-201">SubmitAlert : VALID REQUEST</span>
 #### Expected Response Code
 ```
 201 Created
@@ -136,7 +145,7 @@ curl -X POST  ^
 
 ---
 
-### SubmitAlert : INVALID JWT Token
+### <span id="SubmitAlert-401">SubmitAlert : INVALID JWT Token</span>
 #### Expected Response Code
 ```
 401 Unauthorized
@@ -169,7 +178,7 @@ curl -X POST  ^
 
 ---
 
-### SubmitAlert : INVALID Body
+### <span id="SubmitAlert-400">SubmitAlert : INVALID Body</span>
 *Data error eg. an incorrect variable name*
 #### Expected Response Code
 ```
