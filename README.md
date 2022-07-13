@@ -1,17 +1,22 @@
 # NNS SFO CSIMS API Testing cURL commands for Windows Command Prompt
-1. [CreateServiceOrder REQUESTS](#CreateServiceOrder)
+1. [Authenticate](#Authenticate)
 
-    * [201 Created](#CreateServiceOrder-201)
-    * [401 Unauthorized](#CreateServiceOrder-401)
-    * [400 Bad Request](#CreateServiceOrder-400)
+    * [200 OK](#Authenticate-200)
+    * [400 OK](#Authenticate-401)
 
-2. [SubmitAlert REQUESTS](#SubmitAlert)
+2. [SendServiceRequest REQUESTS](#SendServiceRequest)
+
+    * [201 Created](#SendServiceRequest-200)
+    * [401 Unauthorized](#SendServiceRequest-401)
+    * [400 Bad Request](#SendServiceRequest-400)
+
+3. [SubmitAlert REQUESTS](#SubmitAlert)
 
     * [201 Created](#SubmitAlert-201)
     * [401 Unauthorized](#SubmitAlert-401)
     * [400 Bad Request](#SubmitAlert-400)
 
-3. [CircuitIdUpdates REQUESTS](#CircuitIdUpdates)
+4. [CircuitIdUpdates REQUESTS](#CircuitIdUpdates)
 
     * [202 Accepted](#CircuitIdUpdates-202)
     * [401 Unauthorized](#CircuitIdUpdates-401)
@@ -20,11 +25,72 @@
 
 ---
 
-## <span id="CreateServiceOrder">CreateServiceOrder REQUESTS</span>
-### <span id="CreateServiceOrder-201">CreateServiceOrder : VALID REQUEST</span>
+## <span id="Authenticate">Authenticate REQUESTS</span>
+### <span id="Authenticate-200">Authenticate : VALID REQUEST</span>
 #### Expected Response Code
 ```
-201 Created
+200 OK
+```
+#### Request Headers Sent
+```
+Content-Type: application/json
+```
+#### Request Body Sent
+```
+{
+  "userName": "TBD",
+  "password": "TBD"
+}
+```
+#### Request CURL
+```
+curl -X POST  ^
+  -H "Content-Type: application/json" ^
+  -d '{"userName":"TBD","password":"TBD"}' ^
+  qa-csims01/api/authentication/authenticate
+```
+#### Server Response Body
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibm9haHMiLCJqdGkiOiI0Y2ZkNDY1My1hOTRmLTQ4MGUtYjAxOC0wYTJmODEyZGU5OTEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTYzNTkyNTA0MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCIsIlJvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoibm9haHMiLCJSSWQiOiIxNDVlOGQ4OC0wMmFkLTQ4N2MtODg3ZC00ZjdkNDc2Nzg4ZWQifQ._zt1whTRjVhbOzQqUqOlIpaksVcDmoIjhLV_wiabuhA
+```
+
+---
+
+### <span id="Authenticate-401">Authenticate : INVALID Username/Password</span>
+#### Expected Response Code
+```
+401 Unauthorized
+```
+#### Request Headers Sent
+```
+Content-Type: application/json
+```
+#### Request Body Sent
+```
+{
+  "userName": "wrongUser",
+  "password": "badPass"
+}
+```
+#### Request CURL
+```
+curl -X POST  ^
+  -H "Content-Type: application/json" ^
+  -d '{"userName":"wrongUser","password":"badPass"}' ^
+  qa-csims01/api/authentication/authenticate
+```
+#### Server Response Body
+```
+User name or password is incorrect.
+```
+
+---
+
+## <span id="SendServiceRequest">SendServiceRequest REQUESTS</span>
+### <span id="SendServiceRequest-200">SendServiceRequest : VALID REQUEST</span>
+#### Expected Response Code
+```
+200 OK
 ```
 #### Request Headers Sent
 ```
@@ -34,12 +100,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 #### Request Body Sent
 ```
 {
-  "RequestItemId": "987654321",
-  "ProvisioningTaskId": "123456789",
-  "RequestorContactName": "FirstName LastName",
-  "RequestorContactEmail": "your@email.com",
-  "RequestorContactPhone": "800-333-5555",
-  "ProvisioingTaskShortDescription": "Breif description of this request."
+  "requestItemID": "987654321",
+  "requestSysID": ".",
+  "provisionTaskID": "123456789",
+  "provisionTaskSysID": ".",
+  "requesterContactName": "FirstName LastName",
+  "requesterContactEmail": "your@email.com",
+  "provisionTaskDescription": "Breif description of this request."
 }
 ```
 #### Request CURL
@@ -47,13 +114,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 curl -X POST  ^
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibm9haHMiLCJqdGkiOiI0Y2ZkNDY1My1hOTRmLTQ4MGUtYjAxOC0wYTJmODEyZGU5OTEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTYzNTkyNTA0MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCIsIlJvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoibm9haHMiLCJSSWQiOiIxNDVlOGQ4OC0wMmFkLTQ4N2MtODg3ZC00ZjdkNDc2Nzg4ZWQifQ._zt1whTRjVhbOzQqUqOlIpaksVcDmoIjhLV_wiabuhA" ^
   -H "Content-Type: application/json" ^
-  -d '{"RequestItemId":"987654321","ProvisioningTaskId":"123456789","RequestorContactName":"FirstName LastName","RequestorContactEmail":"your@email.com","RequestorContactPhone":"800-333-5555","ProvisioingTaskShortDescription":"Breif description of this request."}' ^
-  localhost/v2/serviceorder/create
+  -d '{"requestItemID":"987654321","requestSysID":".","provisionTaskID":"123456789","provisionTaskSysID":".","requesterContactName":"FirstName LastName","requesterContactEmail":"your@email.com","provisionTaskDescription":"Breif description of this request."}' ^
+  qa-csims01/v1/servicerequest/sendservicerequest
+```
+#### Server Response Body
+```
+{
+  "responseCode": "Success",
+  "httpCode": 201,
+  "responseMessage": "524d00b9-09bc-4ac4-a309-4ee963b24772",
+  "responseObject": null,
+  "errorMessage": null
+}
 ```
 
 ---
 
-### <span id="CreateServiceOrder-401">CreateServiceOrder : INVALID JWT Token</span>
+### <span id="SendServiceRequest-401">SendServiceRequest : INVALID JWT Token</span>
 #### Expected Response Code
 ```
 401 Unauthorized
@@ -66,12 +143,13 @@ Authorization: Bearer abcdefghijklmnopqrstuvwxyz1234567890
 #### Request Body Sent
 ```
 {
-  "RequestItemId": "987654321",
-  "ProvisioningTaskId": "123456789",
-  "RequestorContactName": "FirstName LastName",
-  "RequestorContactEmail": "your@email.com",
-  "RequestorContactPhone": "800-333-5555",
-  "ProvisioingTaskShortDescription": "Breif description of this request."
+  "requestItemID": "987654321",
+  "requestSysID": ".",
+  "provisionTaskID": "123456789",
+  "provisionTaskSysID": ".",
+  "requesterContactName": "FirstName LastName",
+  "requesterContactEmail": "your@email.com",
+  "provisionTaskDescription": "Breif description of this request."
 }
 ```
 #### Request CURL
@@ -79,14 +157,14 @@ Authorization: Bearer abcdefghijklmnopqrstuvwxyz1234567890
 curl -X POST  ^
   -H "Authorization: Bearer abcdefghijklmnopqrstuvwxyz1234567890" ^
   -H "Content-Type: application/json" ^
-  -d '{"RequestItemId":"987654321","ProvisioningTaskId":"123456789","RequestorContactName":"FirstName LastName","RequestorContactEmail":"your@email.com","RequestorContactPhone":"800-333-5555","ProvisioingTaskShortDescription":"Breif description of this request."}' ^
-  localhost/v2/serviceorder/create
+  -d '{"requestItemID":"987654321","requestSysID":".","provisionTaskID":"123456789","provisionTaskSysID":".","requesterContactName":"FirstName LastName","requesterContactEmail":"your@email.com","provisionTaskDescription":"Breif description of this request."}' ^
+  qa-csims01/v1/servicerequest/sendservicerequest
 ```
 
 ---
 
-### <span id="CreateServiceOrder-400">CreateServiceOrder : INVALID Body</span>
-*Data error eg. an incorrect variable name*
+### <span id="SendServiceRequest-400">SendServiceRequest : INVALID Body</span>
+*requestItemId already exists*
 #### Expected Response Code
 ```
 400 Bad Request
@@ -99,12 +177,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 #### Request Body Sent
 ```
 {
-  "Id": "987654321",
-  "ProvisioningTaskId": "123456789",
-  "RequestorContactName": "FirstName LastName",
-  "RequestorContactEmail": "your@email.com",
-  "RequestorContactPhone": "800-333-5555",
-  "ProvisioingTaskShortDescription": "Breif description of this request."
+  "requestItemID": "987654321",
+  "requestSysID": ".",
+  "provisionTaskID": "123456789",
+  "provisionTaskSysID": ".",
+  "requesterContactName": "FirstName LastName",
+  "requesterContactEmail": "your@email.com",
+  "provisionTaskDescription": "Breif description of this request."
 }
 ```
 #### Request CURL
@@ -112,8 +191,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 curl -X POST  ^
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibm9haHMiLCJqdGkiOiI0Y2ZkNDY1My1hOTRmLTQ4MGUtYjAxOC0wYTJmODEyZGU5OTEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTYzNTkyNTA0MywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo2MTk1NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCIsIlJvbGUiOiJhZG1pbiIsIlVzZXJOYW1lIjoibm9haHMiLCJSSWQiOiIxNDVlOGQ4OC0wMmFkLTQ4N2MtODg3ZC00ZjdkNDc2Nzg4ZWQifQ._zt1whTRjVhbOzQqUqOlIpaksVcDmoIjhLV_wiabuhA" ^
   -H "Content-Type: application/json" ^
-  -d '{"Id":"987654321","ProvisioningTaskId":"123456789","RequestorContactName":"FirstName LastName","RequestorContactEmail":"your@email.com","RequestorContactPhone":"800-333-5555","ProvisioingTaskShortDescription":"Breif description of this request."}' ^
-  localhost/v2/serviceorder/create
+  -d '{"requestItemID":"987654321","requestSysID":".","provisionTaskID":"123456789","provisionTaskSysID":".","requesterContactName":"FirstName LastName","requesterContactEmail":"your@email.com","provisionTaskDescription":"Breif description of this request."}' ^
+  qa-csims01/v1/servicerequest/sendservicerequest
+```
+#### Server Response Body
+```
+{
+  "responseCode": "Warning",
+  "httpCode": 400,
+  "responseMessage": null,
+  "responseObject": null,
+  "errorMessage": "Record already exists."
+}
 ```
 
 ---
