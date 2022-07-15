@@ -2,7 +2,7 @@
 1. [Authenticate](#Authenticate)
 
     * [200 OK](#Authenticate-200)
-    * [400 OK](#Authenticate-401)
+    * [400 Unauthorized](#Authenticate-401)
 
 2. [SendServiceRequest (Southbound)](#SendServiceRequest)
 
