@@ -4,19 +4,19 @@
     * [200 OK](#Authenticate-200)
     * [400 OK](#Authenticate-401)
 
-2. [SendServiceRequest REQUESTS](#SendServiceRequest)
+2. [SendServiceRequest (Southbound)](#SendServiceRequest)
 
     * [201 Created](#SendServiceRequest-200)
     * [401 Unauthorized](#SendServiceRequest-401)
     * [400 Bad Request](#SendServiceRequest-400)
 
-3. [SubmitAlert REQUESTS](#SubmitAlert)
+3. [SubmitAlert (Southbound)](#SubmitAlert)
 
     * [201 Created](#SubmitAlert-201)
     * [401 Unauthorized](#SubmitAlert-401)
     * [400 Bad Request](#SubmitAlert-400)
 
-4. [CircuitIdUpdates REQUESTS](#CircuitIdUpdates)
+4. [CircuitIdUpdates (Northbound)](#CircuitIdUpdates)
 
     * [202 Accepted](#CircuitIdUpdates-202)
     * [401 Unauthorized](#CircuitIdUpdates-401)
@@ -25,7 +25,7 @@
 
 ---
 
-## <span id="Authenticate">Authenticate REQUESTS</span>
+## <span id="Authenticate">Authenticate (Southbound)</span>
 ### <span id="Authenticate-200">Authenticate : VALID REQUEST</span>
 #### Expected Response Code
 ```
@@ -86,7 +86,7 @@ User name or password is incorrect.
 
 ---
 
-## <span id="SendServiceRequest">SendServiceRequest REQUESTS</span>
+## <span id="SendServiceRequest">SendServiceRequest (Southbound)</span>
 ### <span id="SendServiceRequest-200">SendServiceRequest : VALID REQUEST</span>
 #### Expected Response Code
 ```
@@ -308,7 +308,7 @@ curl -X POST  ^
 
 ---
 
-## <span id="CircuitIdUpdates">CircuitIdUpdates REQUESTS</span>
+## <span id="CircuitIdUpdates">CircuitIdUpdates (Northbound)</span>
 ### <span id="CircuitIdUpdates-202">CircuitIdUpdates : VALID REQUEST</span>
 #### Expected Response Code
 ```
