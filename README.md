@@ -10,7 +10,7 @@
     * [401 Unauthorized](#SendServiceRequest-401)
     * [400 Bad Request](#SendServiceRequest-400)
 
-3. [SubmitAlert (Southbound)](#SubmitAlert)
+3. [SubmitAlert (SolarWinds)](#SubmitAlert)
 
     * [201 Created](#SubmitAlert-201)
     * [401 Unauthorized](#SubmitAlert-401)
@@ -207,7 +207,7 @@ curl -X POST  ^
 
 ---
 
-## <span id="SubmitAlert">SubmitAlert REQUESTS</span>
+## <span id="SubmitAlert">SubmitAlert (SolarWinds)</span>
 ### <span id="SubmitAlert-201">SubmitAlert : VALID REQUEST</span>
 #### Expected Response Code
 ```
